@@ -1,38 +1,30 @@
 .weather-app-container {
-    font-family: "sans-serif"; 
-    padding: "20px"; 
-    margin-left: "auto"; 
-    margin-right: "auto"; 
-    text-align: "center"; 
-    background-color: "#05ccdeff"; 
-    border-radius: "10px"; 
-    width: "300px"; 
-    margin-top: "50px"; 
-    box-shadow: "5px 4px 10px rgba(0, 0, 0, 0.5)";
+    margin: 50px auto;
+    font-family: sans-serif; 
+    padding: 20px;
+    text-align: center; 
+    background-color: #05ccdeff; 
+    border-radius: 10px; 
+    width: 90vw;
+    max-width: 700px;;
+    box-shadow: 5px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-.weather-app-container input {
-    margin-top: "20px"; 
-    padding: "5px"; 
-    border-radius: "3px"; 
-    border: "1px solid #ccc"; 
-    width: "200px"; 
-    text-align: "center";
+.city {
+    margin-right: 10px;
+    margin-bottom: 10px;;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 300px;
 }
 
-.weather-app-container button {
-    padding: "4px"; 
-    margin-left: "5px";
-}
-
-.weather-info {
-    margin-top: "50px"; 
-    margin-left: "auto"; 
-    margin-right: "auto"; 
-    padding: "15px"; 
-    border: "1px solid #ccc"; 
-    border-radius: "10px"; 
-    width: "250px"; 
-    background-color: "#f9f9f9";
+.weather-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    width: 180px;
+    background-color: #f0f8ff;
+    text-align: center;
 }
 

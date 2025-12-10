@@ -1,14 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { fetchWeather } from './api/weather'
 
 function App() {
   const [city, setCity] = useState("");
-  const [weather, setWeather] = useState(null);
+  const [cities, setCities] = useState([]);
+  const [filter, setFilter] = useState("");
+
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("cities")) || [];
+    setCities(saved);
+  }, []);  
 
   const handleSearch = async () => {
     try {
       const data = await fetchWeather(city);
-      setWeather(data);
+      const newCities = [...cities, data];
+      setCities(newCities);
+      localStorage.setItem("cities", JSON.stringify(newCities));
+      setCity("");
     } catch (err) {
       alert(err.message);
     }
@@ -22,49 +31,50 @@ function App() {
 
   return (
     <>
-      <div style={{ 
-        fontFamily: "sans-serif", 
-        padding: "20px", 
-        marginLeft: "auto", 
-        marginRight: "auto", 
-        textAlign: "center", 
-        backgroundColor: "#05ccdeff", 
-        borderRadius: "10px", 
-        width: "300px", 
-        marginTop: "50px", 
-        boxShadow: "5px 4px 10px rgba(0, 0, 0, 0.5)" }}>
-        <h1>🌦️ Weather App</h1>
+      <div className="weather-app-container">
+        <h1>🌦️ Weather App Dashboard</h1>
         <p>Beginner small project using React</p>
         <input 
-          style={{ marginTop: "20px", padding: "5px", borderRadius: "3px", border: "1px solid #ccc", width: "200px", textAlign: "center" }}
+          className="city"
           type="text" 
           value={city}
           onChange={(e) => setCity(e.target.value)}
           placeholder="Enter city"
           onKeyDown={handleKeyDown}
         />
-        <button onClick={handleSearch} style={{padding: "4px", marginLeft: "5px"}}>Search</button>
+        <button onClick={handleSearch}>Add city</button>
+        <input
+        type="text"
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+        placeholder="Filter cities" 
+        />
 
-        {weather && (
-          <div style={{
-            marginTop: "50px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            padding: "15px",
-            border: "1px solid #ccc",
-            borderRadius: "10px",
-            width: "250px",
-            backgroundColor: "#f9f9f9"
-          }}>
-            <h2>{weather.name}</h2>
-            <p>Temp: {weather.main.temp} C</p>
-            <p>Wind speed: {weather.wind.speed} km/h</p>
-            <p>Description: {weather.weather[0].description}</p>
-          </div>
-        )}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "15px", marginTop: "20px" }}>
+          {cities
+            .filter(c => c.name.toLowerCase().includes(filter.toLowerCase()))
+            .map((c, i) => (
+            <WeatherCard key={i} data={c} />
+          ))}
+        </div>
       </div>
     </>
   );
+}
+
+function WeatherCard({ data }) {
+  const temp = data.main.temp;
+  const badge = temp > 30 ? "Hot 🔥" : temp < 10 ? "Cold ❄️" : "Mild 🌤️";
+
+  return (
+    <div className="weather-card">
+      <h2>{data.name}</h2>
+      <p>{badge}</p>
+      <p><strong>Temp: {temp} °C</strong></p>
+      <p>Wind speed: {data.wind.speed} m/s</p>
+      <p>Description: {data.weather[0].description}</p>
+    </div>
+  )
 }
 
 export default App
