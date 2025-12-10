@@ -10,6 +10,10 @@
     box-shadow: 5px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
+.weather-app-container button {
+    margin-right: 50px;
+}
+
 .city {
     margin-right: 10px;
     margin-bottom: 10px;;
@@ -20,6 +24,7 @@
 }
 
 .weather-card {
+    margin: 10px auto;
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 10px;
